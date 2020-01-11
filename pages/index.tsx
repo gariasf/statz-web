@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from '@material-ui/core'
 
-export const Index: React.FunctionComponent = () => {
+export default function Index() {
   return (
     <Container maxWidth="lg">
       <div>

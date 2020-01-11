@@ -26,7 +26,7 @@ export default class StatzDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+StatzDocument.getInitialProps = async ctx => {
   // Resolution order
   //
   // On the server:
