@@ -6,6 +6,7 @@ import { Toolbar, useScrollTrigger, Zoom, Fab, Box } from '@material-ui/core'
 import { Header } from '../Header'
 import Meta from '../Meta'
 
+
 export const Layout: React.FunctionComponent = props => {
   return (
     <Box className={styles.root}>

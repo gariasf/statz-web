@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../components/theme'
 import { Layout } from '../components/Layout'
 
+import config from '../shared/config'
+
 export default class StatzFront extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -21,7 +23,7 @@ export default class StatzFront extends App {
     return (
       <React.Fragment>
         <Head>
-          <title>Statz</title>
+        <title>{config.siteTitle}</title>
         </Head>
         <StylesProvider injectFirst>
           <ThemeProvider theme={theme}>
