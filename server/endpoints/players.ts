@@ -1,17 +1,16 @@
-import { query } from './database'
-import { responseOK } from './api'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PlayerStats, PlayerStatsData } from '../shared/api-types'
-import config from '../shared/config'
+import { ApiResponse, PlayerStats, PlayerStatsData } from '../../shared/api-types'
+import { responseOK } from '../api'
+import { query, statzQuery } from '../database'
 
 const defaultCols = ['value', 'world']
 
-export async function findAll() {
+export async function findAll(req: NextApiRequest, res: NextApiResponse): Promise<ApiResponse<any>> {
   const userData: any[] = await query('SELECT uuid, playerName FROM statz_players;')
   return responseOK(userData)
 }
 
-export async function getById(req: NextApiRequest, res: NextApiResponse) {
+export async function getById(req: NextApiRequest, res: NextApiResponse): Promise<ApiResponse<any>> {
   const playerId = req.query.id.toString()
 
   const playerStats: PlayerStats = new PlayerStats()
@@ -45,18 +44,4 @@ export async function getById(req: NextApiRequest, res: NextApiResponse) {
   playerStats.stats = playerStatsData
 
   return responseOK(playerStats)
-}
-
-async function statzQuery(table: string, columns: string[], playerId: string): Promise<any[]> {
-  const columnSelection: string = columns.reduce((acc, cur) => `${acc}, ${cur}`)
-
-  const result = await query(
-    `SELECT ${columnSelection} FROM ${config.database.prefix}_${table} WHERE uuid = "${playerId}";`
-  )
-
-  if (!result.length) {
-    return null
-  }
-
-  return result
 }

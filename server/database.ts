@@ -4,7 +4,7 @@ import config from '../shared/config'
 
 const pool: mariadb.Pool = mariadb.createPool({
   ...config.database,
-  connectionLimit: 100,
+  connectionLimit: 5,
 })
 
 function getConnection(): Promise<mariadb.PoolConnection> {
@@ -31,9 +31,24 @@ export async function query(sql: string): Promise<any[]> {
   try {
     queryResult = conn.query(sql)
   } catch (err) {
-    closeDb()
     throw err
   }
 
+  conn.end()
+
   return queryResult
+}
+
+export async function statzQuery(table: string, columns: string[], playerId: string): Promise<any[]> {
+  const columnSelection: string = columns.reduce((acc, cur) => `${acc}, ${cur}`)
+
+  const result = await query(
+    `SELECT ${columnSelection} FROM ${config.database.prefix}_${table} WHERE uuid = "${playerId}";`
+  )
+
+  if (!result.length) {
+    return null
+  }
+
+  return result
 }
