@@ -5,11 +5,12 @@ const config = {
       user: 'root',
       password: 'Passw0rd',
       database: 'statz',
+      prefix: 'statz',
     },
     siteName: 'Statz',
     siteDescription: 'Statz desc',
     siteTwitter: '@gariasf',
-    siteUrl: 'http://localhost:3000'
+    siteUrl: 'http://localhost:3000',
   },
 }
 

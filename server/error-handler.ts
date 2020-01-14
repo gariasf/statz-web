@@ -1,9 +1,7 @@
-import {ApiError} from "../shared/api-types"
-import {responseKO, RequestHandler} from "./api"
+import { ApiError } from '../shared/api-types'
+import { responseKO, RequestHandler } from './api'
 
-export function withErrorHandler<T>(
-  fn: RequestHandler<T>,
-): RequestHandler<T, ApiError> {
+export function withErrorHandler<T>(fn: RequestHandler<T>): RequestHandler<T, ApiError> {
   return async req => {
     try {
       const res = await fn(req)
@@ -11,18 +9,18 @@ export function withErrorHandler<T>(
     } catch (e) {
       if (e.statusCode === 400) {
         return responseKO({
-          error: "BadRequest",
+          error: 'BadRequest',
           statusCode: e.statusCode,
           errorMessage: e.message,
         })
       } else {
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === 'development') {
           console.log(e)
         }
         return responseKO({
           statusCode: 500,
-          error: "InternalServerError",
-          errorMessage: "Oops something went wrong",
+          error: 'InternalServerError',
+          errorMessage: 'Oops something went wrong',
         })
       }
     }

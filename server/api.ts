@@ -1,17 +1,11 @@
-import {NextApiRequest, NextApiResponse} from "next"
-import {IncomingHttpHeaders} from "http"
-import {KOResponse, OKResponse, ApiResponse} from "../shared/api-types"
-import {withErrorHandler} from "./error-handler"
+import { NextApiRequest, NextApiResponse } from 'next'
+import { IncomingHttpHeaders } from 'http'
+import { KOResponse, OKResponse, ApiResponse } from '../shared/api-types'
+import { withErrorHandler } from './error-handler'
 
-export type NextHandler = (
-  req: NextApiRequest,
-  res: NextApiResponse,
-) => Promise<void>
+export type NextHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>
 
-export type RequestHandler<T = any, E = any, P = any> = (
-  req: ApiRequest,
-  params?: P,
-) => Promise<ApiResponse<T, E>>
+export type RequestHandler<T = any, E = any, P = any> = (req: ApiRequest, params?: P) => Promise<ApiResponse<T, E>>
 
 export type ApiRequest<TBody = any, TQuery = any> = {
   body?: TBody
@@ -37,13 +31,9 @@ export function withNextResponse<T>(fn: RequestHandler<T>): NextHandler {
 }
 
 export function responseOK<T extends object>(value: T): OKResponse<T> {
-  return {ok: true, value}
+  return { ok: true, value }
 }
 
-export function responseKO<T>(value: {
-  error: T
-  statusCode: number
-  errorMessage?: string
-}): KOResponse<T> {
-  return {...value, ok: false}
+export function responseKO<T>(value: { error: T; statusCode: number; errorMessage?: string }): KOResponse<T> {
+  return { ...value, ok: false }
 }
