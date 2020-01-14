@@ -7,7 +7,7 @@ import config from '../shared/config'
 const defaultCols = ['value', 'world']
 
 export async function findAll() {
-  const userData: any[] = await query('SELECT * FROM statz_players;')
+  const userData: any[] = await query('SELECT uuid, playerName FROM statz_players;')
   return responseOK(userData)
 }
 
@@ -47,11 +47,11 @@ export async function getById(req: NextApiRequest, res: NextApiResponse) {
   return responseOK(playerStats)
 }
 
-async function statzQuery(table: string, columns = ['*'], playerId: string): Promise<any[]> {
-  const columnsSelection: string = columns.reduce((acc, cur) => `${acc}, ${cur}`)
+async function statzQuery(table: string, columns: string[], playerId: string): Promise<any[]> {
+  const columnSelection: string = columns.reduce((acc, cur) => `${acc}, ${cur}`)
 
   const result = await query(
-    `SELECT ${columnsSelection} FROM ${config.database.prefix}_${table} WHERE uuid = "${playerId}";`
+    `SELECT ${columnSelection} FROM ${config.database.prefix}_${table} WHERE uuid = "${playerId}";`
   )
 
   if (!result.length) {
