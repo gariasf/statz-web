@@ -2,7 +2,6 @@ import Head from 'next/head'
 
 import config from '../../shared/config'
 
-
 const Meta = () => (
   <Head>
     <meta name="description" content={config.siteDescription} />

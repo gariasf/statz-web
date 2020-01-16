@@ -7,7 +7,7 @@ const config = {
       database: 'statz',
       prefix: 'statz',
     },
-    siteName: 'Statz',
+    siteTitle: 'Statz',
     siteDescription: 'Statz desc',
     siteTwitter: '@gariasf',
     siteUrl: 'http://localhost:3000',
